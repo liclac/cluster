@@ -1,0 +1,29 @@
+- name: use iptables for bridged ipv4 traffic
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    state: present
+
+- name: add kubernetes repo key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: add kubernetes repo
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-{{ ansible_distribution_release }} main
+    state: present
+
+- name: install docker
+  apt:
+    package: docker-engine
+    state: present
+
+- name: install kubernetes components
+  apt:
+    package: "{{ item }}"
+    state: present
+  with_items:
+  - kubectl
+  - kubelet
+  - kubeadm

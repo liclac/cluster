@@ -1,0 +1,7 @@
+- name: join kubernetes cluster
+  command: >
+    kubeadm join {{ k8s_master }}:6443
+    --token={{ k8s_token }}
+    --discovery-token-unsafe-skip-ca-verification
+  args:
+    creates: /etc/kubernetes/kubelet.conf
