@@ -1,3 +1,8 @@
+- name: load br_netfilter
+  modprobe:
+    name: br_netfilter
+    state: present
+
 - name: use iptables for bridged ipv4 traffic
   sysctl:
     name: net.bridge.bridge-nf-call-iptables
